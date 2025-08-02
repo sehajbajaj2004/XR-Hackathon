@@ -17,7 +17,7 @@ public class RayGrabXZOnly : MonoBehaviour
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
             Vector3 hitPos = hit.point;
-            hitPos.y = 0; // lock to XZ plane
+            //hitPos.y = 0; // lock to XZ plane
             attachPoint.position = hitPos;
         }
     }
