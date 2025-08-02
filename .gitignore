@@ -70,3 +70,19 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Common 3D model files (optional to ignore if working with external sources)
+*.fbx
+*.FBX
+*.obj
+*.OBJ
+*.blend
+*.3ds
+*.dae
+*.stl
+*.ply
+*.glb
+*.gltf
+*.abc
+*.ma
+*.mb
