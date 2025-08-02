@@ -13,7 +13,7 @@ public class ObjectSelectorMover : MonoBehaviour
     public InputActionProperty rightTrigger;
     public InputActionProperty leftJoystick;
     public InputActionProperty rightJoystick;
-    public InputActionProperty aButton; // For A button (typically right hand)
+    public InputActionProperty aButton;
 
     [Header("Movement Components")]
     public ActionBasedContinuousMoveProvider moveProvider;
@@ -25,7 +25,6 @@ public class ObjectSelectorMover : MonoBehaviour
 
     private void OnEnable()
     {
-        // Enable all input actions
         leftTrigger.action.Enable();
         rightTrigger.action.Enable();
         leftJoystick.action.Enable();
@@ -35,7 +34,6 @@ public class ObjectSelectorMover : MonoBehaviour
 
     private void OnDisable()
     {
-        // Disable all input actions
         leftTrigger.action.Disable();
         rightTrigger.action.Disable();
         leftJoystick.action.Disable();
@@ -47,6 +45,7 @@ public class ObjectSelectorMover : MonoBehaviour
     {
         bool triggerPressed = IsTriggerPressed(leftTrigger) || IsTriggerPressed(rightTrigger);
 
+        // Toggle selection with trigger press
         if (!triggerWasPressed && triggerPressed)
         {
             if (!isObjectSelected)
@@ -62,11 +61,11 @@ public class ObjectSelectorMover : MonoBehaviour
             MoveObject();
             RotateObject();
 
-            // Check if A button is pressed to disable object
-            if (aButton.action != null && aButton.action.ReadValue<float>() > 0.5f && aButton.action.triggered)
+            // Delete object with A button
+            if (aButton.action != null && aButton.action.WasPressedThisFrame())
             {
                 selectedObject.SetActive(false);
-                DeselectObject();
+                DeselectObject(); // This will enable both providers
             }
         }
     }
@@ -86,19 +85,33 @@ public class ObjectSelectorMover : MonoBehaviour
                 selectedObject = hit.collider.gameObject;
                 isObjectSelected = true;
 
-                if (moveProvider != null) moveProvider.enabled = false;
-                if (turnProvider != null) turnProvider.enabled = false;
+                // Disable both providers when selecting
+                SetMovementProvidersEnabled(false);
             }
         }
     }
 
     private void DeselectObject()
     {
+        // Enable both providers when deselecting
+        SetMovementProvidersEnabled(true);
+
         selectedObject = null;
         isObjectSelected = false;
+    }
 
-        if (moveProvider != null) moveProvider.enabled = true;
-        if (turnProvider != null) turnProvider.enabled = true;
+    private void SetMovementProvidersEnabled(bool enabled)
+    {
+        if (moveProvider != null)
+        {
+            moveProvider.enabled = enabled;
+            Debug.Log($"Move provider {(enabled ? "enabled" : "disabled")}");
+        }
+        if (turnProvider != null)
+        {
+            turnProvider.enabled = enabled;
+            Debug.Log($"Turn provider {(enabled ? "enabled" : "disabled")}");
+        }
     }
 
     private void MoveObject()
