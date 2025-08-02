@@ -4,28 +4,38 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ObjectSelectorMover : MonoBehaviour
 {
+    [Header("Ray Interactors")]
     public XRRayInteractor leftRayInteractor;
     public XRRayInteractor rightRayInteractor;
 
+    [Header("Input Actions")]
     public InputActionProperty leftTrigger;
     public InputActionProperty rightTrigger;
     public InputActionProperty leftJoystick;
     public InputActionProperty rightJoystick;
 
+    [Header("Movement Components")]
+    public ActionBasedContinuousMoveProvider moveProvider;
+    public ActionBasedContinuousTurnProvider turnProvider;
+
     private GameObject selectedObject = null;
     private bool isObjectSelected = false;
+    private bool triggerWasPressed = false;
 
     void Update()
     {
-        // Detect Trigger Press from either hand
-        if (!isObjectSelected && (IsTriggerPressed(leftTrigger) || IsTriggerPressed(rightTrigger)))
+        bool triggerPressed = IsTriggerPressed(leftTrigger) || IsTriggerPressed(rightTrigger);
+
+        if (!triggerWasPressed && triggerPressed)
         {
-            TrySelectObject();
+            // Toggle selection
+            if (!isObjectSelected)
+                TrySelectObject();
+            else
+                DeselectObject();
         }
-        else if (isObjectSelected && (IsTriggerPressed(leftTrigger) || IsTriggerPressed(rightTrigger)))
-        {
-            DeselectObject();
-        }
+
+        triggerWasPressed = triggerPressed;
 
         // Move or Rotate selected object
         if (isObjectSelected && selectedObject != null)
@@ -37,19 +47,22 @@ public class ObjectSelectorMover : MonoBehaviour
 
     private bool IsTriggerPressed(InputActionProperty trigger)
     {
-        return trigger.action != null && trigger.action.WasPressedThisFrame();
+        return trigger.action != null && trigger.action.IsPressed();
     }
 
     private void TrySelectObject()
     {
         RaycastHit hit;
-
         if (rightRayInteractor.TryGetCurrent3DRaycastHit(out hit) || leftRayInteractor.TryGetCurrent3DRaycastHit(out hit))
         {
             if (hit.collider != null && hit.collider.gameObject.CompareTag("Selectable"))
             {
                 selectedObject = hit.collider.gameObject;
                 isObjectSelected = true;
+
+                // Disable movement & turning
+                if (moveProvider != null) moveProvider.enabled = false;
+                if (turnProvider != null) turnProvider.enabled = false;
             }
         }
     }
@@ -58,6 +71,10 @@ public class ObjectSelectorMover : MonoBehaviour
     {
         selectedObject = null;
         isObjectSelected = false;
+
+        // Re-enable movement & turning
+        if (moveProvider != null) moveProvider.enabled = true;
+        if (turnProvider != null) turnProvider.enabled = true;
     }
 
     private void MoveObject()
@@ -70,7 +87,7 @@ public class ObjectSelectorMover : MonoBehaviour
     private void RotateObject()
     {
         Vector2 rotateInput = rightJoystick.action.ReadValue<Vector2>();
-        float rotationSpeed = 90f; // degrees per second
+        float rotationSpeed = 90f;
         float rotationAmount = rotateInput.x * rotationSpeed * Time.deltaTime;
 
         selectedObject.transform.Rotate(0f, rotationAmount, 0f);
