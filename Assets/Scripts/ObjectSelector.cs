@@ -19,7 +19,10 @@ public class ObjectSelectorMover : MonoBehaviour
     public ActionBasedContinuousMoveProvider moveProvider;
     public ActionBasedContinuousTurnProvider turnProvider;
 
-    private GameObject selectedObject = null;
+    [Header("UI Elements")]
+    public GameObject hoverUI;      // UI shown on hover
+    public GameObject selectionUI;  // UI shown on selection
+
     private bool isObjectSelected = false;
     private bool triggerWasPressed = false;
 
@@ -43,9 +46,11 @@ public class ObjectSelectorMover : MonoBehaviour
 
     void Update()
     {
+        HandleHoverUI();
+
         bool triggerPressed = IsTriggerPressed(leftTrigger) || IsTriggerPressed(rightTrigger);
 
-        // Toggle selection with trigger press
+        // Toggle selection
         if (!triggerWasPressed && triggerPressed)
         {
             if (!isObjectSelected)
@@ -56,18 +61,34 @@ public class ObjectSelectorMover : MonoBehaviour
 
         triggerWasPressed = triggerPressed;
 
-        if (isObjectSelected && selectedObject != null)
+        if (isObjectSelected)
         {
             MoveObject();
             RotateObject();
 
-            // Delete object with A button
             if (aButton.action != null && aButton.action.WasPressedThisFrame())
             {
-                selectedObject.SetActive(false);
-                DeselectObject(); // This will enable both providers
+                gameObject.SetActive(false);
+                DeselectObject();
             }
         }
+    }
+
+    private void HandleHoverUI()
+    {
+        RaycastHit hit;
+        bool hoverDetected = false;
+
+        if (rightRayInteractor.TryGetCurrent3DRaycastHit(out hit) || leftRayInteractor.TryGetCurrent3DRaycastHit(out hit))
+        {
+            if (hit.collider != null && hit.collider.gameObject == this.gameObject)
+            {
+                hoverDetected = true;
+            }
+        }
+
+        if (hoverUI != null)
+            hoverUI.SetActive(hoverDetected);
     }
 
     private bool IsTriggerPressed(InputActionProperty trigger)
@@ -80,45 +101,52 @@ public class ObjectSelectorMover : MonoBehaviour
         RaycastHit hit;
         if (rightRayInteractor.TryGetCurrent3DRaycastHit(out hit) || leftRayInteractor.TryGetCurrent3DRaycastHit(out hit))
         {
-            if (hit.collider != null && hit.collider.gameObject.CompareTag("Selectable"))
+            if (hit.collider != null && hit.collider.gameObject == this.gameObject)
             {
-                selectedObject = hit.collider.gameObject;
                 isObjectSelected = true;
-
-                // Disable both providers when selecting
                 SetMovementProvidersEnabled(false);
+
+                if (selectionUI != null)
+                    selectionUI.SetActive(true);
+
+                if (hoverUI != null)
+                    hoverUI.SetActive(false);
             }
         }
     }
 
     private void DeselectObject()
     {
-        // Enable both providers when deselecting
+        isObjectSelected = false;
+
         SetMovementProvidersEnabled(true);
 
-        selectedObject = null;
-        isObjectSelected = false;
+        if (selectionUI != null)
+            selectionUI.SetActive(false);
+
+        if (hoverUI != null)
+            hoverUI.SetActive(false);
     }
 
     private void SetMovementProvidersEnabled(bool enabled)
     {
         if (moveProvider != null)
         {
-            moveProvider.enabled = enabled;
-            Debug.Log($"Move provider {(enabled ? "enabled" : "disabled")}");
+
+            //moveProvider.enabled = enabled;
+            moveProvider.moveSpeed = enabled ?3: 0;
         }
+
         if (turnProvider != null)
-        {
-            turnProvider.enabled = enabled;
-            Debug.Log($"Turn provider {(enabled ? "enabled" : "disabled")}");
-        }
+            turnProvider.turnSpeed = enabled ? 80:0;
+            //turnProvider.enabled = enabled;
     }
 
     private void MoveObject()
     {
         Vector2 moveInput = leftJoystick.action.ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y) * Time.deltaTime * 1.5f;
-        selectedObject.transform.position += move;
+        transform.position += move;
     }
 
     private void RotateObject()
@@ -127,9 +155,11 @@ public class ObjectSelectorMover : MonoBehaviour
         float rotationSpeed = 90f;
         float rotationAmount = rotateInput.x * rotationSpeed * Time.deltaTime;
 
-        selectedObject.transform.Rotate(0f, rotationAmount, 0f);
+        transform.Rotate(0f, rotationAmount, 0f);
     }
 }
+
+
 
 //using UnityEngine;
 //using UnityEngine.InputSystem;
