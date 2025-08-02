@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -13,6 +13,7 @@ public class ObjectSelectorMover : MonoBehaviour
     public InputActionProperty rightTrigger;
     public InputActionProperty leftJoystick;
     public InputActionProperty rightJoystick;
+    public InputActionProperty aButton; // For A button (typically right hand)
 
     [Header("Movement Components")]
     public ActionBasedContinuousMoveProvider moveProvider;
@@ -22,13 +23,32 @@ public class ObjectSelectorMover : MonoBehaviour
     private bool isObjectSelected = false;
     private bool triggerWasPressed = false;
 
+    private void OnEnable()
+    {
+        // Enable all input actions
+        leftTrigger.action.Enable();
+        rightTrigger.action.Enable();
+        leftJoystick.action.Enable();
+        rightJoystick.action.Enable();
+        aButton.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        // Disable all input actions
+        leftTrigger.action.Disable();
+        rightTrigger.action.Disable();
+        leftJoystick.action.Disable();
+        rightJoystick.action.Disable();
+        aButton.action.Disable();
+    }
+
     void Update()
     {
         bool triggerPressed = IsTriggerPressed(leftTrigger) || IsTriggerPressed(rightTrigger);
 
         if (!triggerWasPressed && triggerPressed)
         {
-            // Toggle selection
             if (!isObjectSelected)
                 TrySelectObject();
             else
@@ -37,17 +57,23 @@ public class ObjectSelectorMover : MonoBehaviour
 
         triggerWasPressed = triggerPressed;
 
-        // Move or Rotate selected object
         if (isObjectSelected && selectedObject != null)
         {
             MoveObject();
             RotateObject();
+
+            // Check if A button is pressed to disable object
+            if (aButton.action != null && aButton.action.ReadValue<float>() > 0.5f && aButton.action.triggered)
+            {
+                selectedObject.SetActive(false);
+                DeselectObject();
+            }
         }
     }
 
     private bool IsTriggerPressed(InputActionProperty trigger)
     {
-        return trigger.action != null && trigger.action.IsPressed();
+        return trigger.action != null && trigger.action.ReadValue<float>() > 0.5f;
     }
 
     private void TrySelectObject()
@@ -60,7 +86,6 @@ public class ObjectSelectorMover : MonoBehaviour
                 selectedObject = hit.collider.gameObject;
                 isObjectSelected = true;
 
-                // Disable movement & turning
                 if (moveProvider != null) moveProvider.enabled = false;
                 if (turnProvider != null) turnProvider.enabled = false;
             }
@@ -72,7 +97,6 @@ public class ObjectSelectorMover : MonoBehaviour
         selectedObject = null;
         isObjectSelected = false;
 
-        // Re-enable movement & turning
         if (moveProvider != null) moveProvider.enabled = true;
         if (turnProvider != null) turnProvider.enabled = true;
     }
