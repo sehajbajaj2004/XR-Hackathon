@@ -1,9 +1,49 @@
 fileFormatVersion: 2
-guid: f65e97aef4747524e8e0c4aa4aca11da
+guid: a9748a96545e69440ae3398ca8d3d378
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brass Antique
+    second: {fileID: 2100000, guid: 1d64b2d5b3ec3a24486067248ecbf057, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "MDF Freij\xF3 - Guararapis"
+    second: {fileID: 2100000, guid: 333a148b316d9a648a1309e63e011791, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal Dark.002
+    second: {fileID: 2100000, guid: f3521b4b83a68964eaaeedebbdd00ad9, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: GWC Brass Antique_metallic
+    second: {fileID: 2800000, guid: d09e75cf0cd75a5409d1c4a76925b3a3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: GWC Brass Antique_normal
+    second: {fileID: 2800000, guid: 37b1a10bb4331ec428de958e6a503699, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MetalDark_color000
+    second: {fileID: 2800000, guid: 951610390804d8b4d9d4c29b47c08ce6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MetalDark_normal
+    second: {fileID: 2800000, guid: eceb54058354a96408bb9cd9d65be8a9, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: freijo_linha_madeira_do_brasil_guararapes
+    second: {fileID: 2800000, guid: 52a1e79cf4d90734fbefd14fa1892a93, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
