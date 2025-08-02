@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &39296685405592219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1498773981492098815}
+  m_Layer: 0
+  m_Name: States
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1498773981492098815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39296685405592219}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7713169990306606088}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &79464328286002674
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7713169990306606088}
   - component: {fileID: 855559703036940322}
+  - component: {fileID: 8646114798267335207}
   m_Layer: 0
   m_Name: Chair
   m_TagString: Selectable
@@ -116,6 +148,7 @@ Transform:
   m_Children:
   - {fileID: 1593503592294752308}
   - {fileID: 5261568532207585233}
+  - {fileID: 1498773981492098815}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &855559703036940322
@@ -137,8 +170,96 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.166007, y: 5.40319, z: 5.4084716}
-  m_Center: {x: 0.07714796, y: 2.8480942, z: 0.44084716}
+  m_Size: {x: 5.166007, y: 5.3274846, z: 5.4084716}
+  m_Center: {x: 0.07714796, y: 2.885947, z: 0.44084716}
+--- !u!114 &8646114798267335207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388009723144434125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5bf862c9e8af248ac66ea0616a4632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftRayInteractor: {fileID: 0}
+  rightRayInteractor: {fileID: 0}
+  leftTrigger:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Left Trigger
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 09920d32-3adf-4a58-b9f9-6230b4036813
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  rightTrigger:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Right Trigger
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 193ba8ac-9e01-46f1-ba24-f29c3b9dde95
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  leftJoystick:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Left Joystick
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: a889785c-8b99-42e7-aea9-ec2d24b8fb72
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  rightJoystick:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Right Joystick
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 62dcdef7-50d6-417d-a109-65a0f9d21d75
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  aButton:
+    m_UseReference: 0
+    m_Action:
+      m_Name: A Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: e39a9e51-7b2f-4607-a6c6-dd1e5c4f4f77
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 04e3668e-c5ae-4e11-b462-2ced2d3d1d0e
+        m_Path: <XRController>{RightHand}/{PrimaryButton}
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: A Button
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  moveProvider: {fileID: 0}
+  turnProvider: {fileID: 0}
 --- !u!1 &1585160964864947401
 GameObject:
   m_ObjectHideFlags: 0

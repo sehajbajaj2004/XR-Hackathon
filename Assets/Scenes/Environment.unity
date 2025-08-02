@@ -1519,7 +1519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &346171475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4187,7 +4187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1538420233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4305,7 +4305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1545849636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4422,7 +4422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1593281114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5265,7 +5265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1932127579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10660,16 +10660,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chair
       objectReference: {fileID: 0}
-    - target: {fileID: 855559703036940322, guid: 7560e0ed81b6c314d9c64355f14f42a9,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 5.3274846
-      objectReference: {fileID: 0}
-    - target: {fileID: 855559703036940322, guid: 7560e0ed81b6c314d9c64355f14f42a9,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 2.885947
-      objectReference: {fileID: 0}
     - target: {fileID: 7713169990306606088, guid: 7560e0ed81b6c314d9c64355f14f42a9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10720,6 +10710,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8646114798267335207, guid: 7560e0ed81b6c314d9c64355f14f42a9,
+        type: 3}
+      propertyPath: moveProvider
+      value: 
+      objectReference: {fileID: 340416571}
+    - target: {fileID: 8646114798267335207, guid: 7560e0ed81b6c314d9c64355f14f42a9,
+        type: 3}
+      propertyPath: turnProvider
+      value: 
+      objectReference: {fileID: 340416568}
+    - target: {fileID: 8646114798267335207, guid: 7560e0ed81b6c314d9c64355f14f42a9,
+        type: 3}
+      propertyPath: leftRayInteractor
+      value: 
+      objectReference: {fileID: 484401493}
+    - target: {fileID: 8646114798267335207, guid: 7560e0ed81b6c314d9c64355f14f42a9,
+        type: 3}
+      propertyPath: rightRayInteractor
+      value: 
+      objectReference: {fileID: 2004185388}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
